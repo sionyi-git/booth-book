@@ -3,6 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#a6a4a1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Booth Book">
 <title>Booth Book</title>
 <script src="lib/page-flip.browser.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,15 +22,16 @@
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;height:100%}
-body{
-  font-family:Jost,system-ui,sans-serif;color:var(--ink);
-  background-color:#a9a7a4;
+/* the striped blanket is the background of the whole page, edge to edge */
+html,.screen{
+  background-color:#a6a4a1;
   background-image:var(--noise),
     repeating-linear-gradient(28deg, rgba(255,255,255,.10) 0 6px, rgba(0,0,0,.07) 9px 13px, rgba(255,255,255,.06) 16px 19px),
-    radial-gradient(120% 80% at 50% 30%, #b9b7b3, #8f8d8a);
+    radial-gradient(130% 90% at 50% 40%, #b7b5b1, #9a9895);
   background-blend-mode:multiply,normal,normal;
-  overflow:hidden;
 }
+html{min-height:100%;overscroll-behavior:none}
+body{font-family:Jost,system-ui,sans-serif;color:var(--ink);background:transparent;overflow:hidden;overscroll-behavior:none}
 button{font:inherit;color:inherit;cursor:pointer}
 .app{position:relative;max-width:460px;height:100%;margin:0 auto;
   overflow:hidden}
@@ -83,12 +89,13 @@ button{font:inherit;color:inherit;cursor:pointer}
 .top .count{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#3d3a35}
 .top .grow{flex:1}
 
-.pages{flex:1;min-height:0;display:flex;padding:8px 14px 4px;outline:none}
+.pages{flex:1;min-height:0;display:flex;padding:6px 14px 4px;outline:none}
 .app:not(.open) .book{pointer-events:none}
 .book .strip,.book .slot{pointer-events:none}
-.pages>.fit{width:100%;height:100%;container-type:size;display:flex;align-items:center;justify-content:center}
+.pages>.fit{width:100%;height:100%;container-type:size;display:flex;flex-direction:column;align-items:center;justify-content:flex-start}
 .binder{position:relative;width:min(100%,520px);aspect-ratio:.8;display:flex}
-@supports (width:1cqh){.binder{width:min(100cqw,100cqh*.8,520px)}}
+@supports (width:1cqh){.binder{width:min(100cqw,(100cqh - 46px)*.8,520px)}}
+.binder{flex:0 0 auto}
 .spine{width:9%;flex:0 0 9%;position:relative}
 .book{position:relative;flex:1;min-width:0;isolation:isolate;border-radius:3px 10px 10px 3px;box-shadow:0 18px 30px -14px rgba(0,0,0,.45),0 2px 4px rgba(0,0,0,.12)}
 .book::before{content:"";position:absolute;inset:3px -3px -3px 3px;border-radius:inherit;background:rgba(225,225,222,.6);z-index:-1}
@@ -120,7 +127,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 .slot{width:82%;height:94%;border:1.5px dashed rgba(60,56,50,.35);border-radius:3px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:#3d3a35;background:rgba(255,255,255,.18);font-size:12px;letter-spacing:.06em;text-align:center;padding:10px}
 .slot *{pointer-events:none}
 .slot b{font-family:"Cormorant Garamond",serif;font-style:italic;font-weight:500;font-size:22px;letter-spacing:0}
-.pager{display:flex;align-items:center;justify-content:center;gap:16px;padding:6px 0 4px;color:#2f2d29;font-size:12px;letter-spacing:.14em;text-transform:uppercase}
+.pager{display:flex;align-items:center;justify-content:center;gap:16px;padding:10px 0 4px;flex:0 0 auto;color:#2f2d29;font-size:12px;letter-spacing:.14em;text-transform:uppercase}
 .pager button{border:0;background:none;padding:8px;opacity:.75}
 .pager button:disabled{opacity:.2}
 .bottom{display:flex;align-items:center;justify-content:space-between;padding:4px 18px 14px}
@@ -236,7 +243,7 @@ input.t:focus,textarea.t:focus{border-color:#1d1b18}
 .spin{width:18px;height:18px;border:2px solid #cfc8bb;border-top-color:#1d1b18;border-radius:50%;animation:sp 1s linear infinite}
 @keyframes sp{to{transform:rotate(360deg)}}
 .hidden{display:none!important}
-.screen{position:relative;height:100dvh;overflow:hidden}
+.screen{position:fixed;inset:0;overflow:hidden}
 .device-deco{display:none}
 @media (min-width:700px) and (min-height:620px){
   :root{--sat:54px;--sab:22px}
@@ -247,7 +254,7 @@ input.t:focus,textarea.t:focus{border-color:#1d1b18}
   .device::before,.device::after{content:"";position:absolute;width:3px;background:#2a2a2c;border-radius:2px}
   .device::before{left:-4px;top:18%;height:6%;box-shadow:0 calc(var(--h)*.08) 0 #2a2a2c,0 calc(var(--h)*.16) 0 #2a2a2c}
   .device::after{right:-4px;top:25%;height:10%}
-  .screen{height:100%;border-radius:calc(var(--h)*.062);transform:translateZ(0);background:#a9a7a4;
+  .screen{position:relative;inset:auto;height:100%;border-radius:calc(var(--h)*.062);transform:translateZ(0);background-color:#a6a4a1;
     background-image:var(--noise),repeating-linear-gradient(28deg, rgba(255,255,255,.10) 0 6px, rgba(0,0,0,.07) 9px 13px, rgba(255,255,255,.06) 16px 19px),radial-gradient(120% 80% at 50% 30%, #b9b7b3, #8f8d8a);background-blend-mode:multiply,normal,normal}
   .device-deco{display:block}
   .island{position:absolute;top:calc(var(--h)*.0145 + 11px);left:50%;transform:translateX(-50%);width:31%;height:34px;border-radius:20px;background:#000;z-index:100}
@@ -292,12 +299,13 @@ input.t:focus,textarea.t:focus{border-color:#1d1b18}
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>
       </button>
     </div>
-    <div class="pages" id="pages" tabindex="0"><div class="fit"><div class="binder" id="binder"><img class="rings" src="img/rings.png" alt=""><div class="spine"></div><div class="book" id="book"></div></div></div></div>
-    <div class="pager">
+    <div class="pages" id="pages" tabindex="0"><div class="fit"><div class="binder" id="binder"><img class="rings" src="img/rings.png" alt=""><div class="spine"></div><div class="book" id="book"></div></div>
+      <div class="pager">
       <button id="prev" aria-label="Previous page">&larr;</button>
       <span id="pageNo">page 1 / 1</span>
       <button id="next" aria-label="Next page">&rarr;</button>
     </div>
+    </div></div>
     <div class="bottom">
       <div class="where" id="where">Opening…</div>
       <button class="add" id="addBtn">
